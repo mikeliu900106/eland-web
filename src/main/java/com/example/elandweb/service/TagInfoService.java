@@ -1,6 +1,7 @@
 package com.example.elandweb.service;
 
 
+import com.example.elandweb.category.TagCategory;
 import com.example.elandweb.dto.ResponseDto;
 import com.example.elandweb.dto.TagInfoDto;
 import com.example.elandweb.model.TagInfoEntity;
@@ -12,5 +13,6 @@ import java.util.List;
 public interface TagInfoService extends BasicService {
         ResponseDto findTagInfos(int page, int size);
 
+        ResponseDto createTagInfos(TagCategory tagCategory);
 //        createTagInfos(TagInfoDto tagInfoDto);
 }

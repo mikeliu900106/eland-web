@@ -18,8 +18,8 @@ public class ChannelInfoEntity {
 
     @OneToOne
     @JoinColumn(name="p_type_2")
-    private PType2ListEntity pType2List;
+    private PType2Entity pType2List;
 
     @OneToMany(mappedBy = "channelInfo")
-    private List<ChannelTagMappingEntity> channelTagMappingList;
+    private List<ChannelTagEntity> channelTagMappingList;
 }

@@ -1,5 +1,6 @@
 package com.example.elandweb.service.impl;
 
+import com.example.elandweb.category.TagCategory;
 import com.example.elandweb.config.DataNotFoundException;
 import com.example.elandweb.dao.TagInfoRepository;
 import com.example.elandweb.dto.PageTagInfoDto;
@@ -32,5 +33,10 @@ public class TagInfoServiceImpl implements TagInfoService {
                 .build();
         ResponseDto responseDto = getRestDto(pageTagInfoDto,"查詢成功");
         return responseDto;
+    }
+
+    @Override
+    public ResponseDto createTagInfos(TagCategory tagCategory) {
+        return null;
     }
 }
