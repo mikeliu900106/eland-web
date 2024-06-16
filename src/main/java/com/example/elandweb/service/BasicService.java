@@ -4,6 +4,8 @@ import com.example.elandweb.dto.ResponseDto;
 import org.springframework.data.domain.PageRequest;
 
 import java.awt.print.Pageable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface BasicService {
@@ -16,22 +18,6 @@ public interface BasicService {
     default int getSelectLimit(int page,int size){
         return page*size;
     }
-    default int getDataCount(List<?> data){
-        return data.size();
-    }
-
-//    default String getId(JpaRepository repository , String idType , int x){
-//        long userCount = repository.count();
-//        Date dNow = new Date( );
-//        SimpleDateFormat ft = new SimpleDateFormat ("yyyyMMdd");
-//        String today =ft.format(dNow);
-//        int intToday = Integer.valueOf(today);
-//        intToday *=100;
-//        intToday +=userCount;
-//        idType = idType.substring(0,x);
-//        String studentId = idType + intToday;
-//        return studentId;
-//    }
 //    default void deleteFile(String imageRealPath) {
 //        System.out.println(imageRealPath);
 //        File file = new File(imageRealPath);
@@ -41,12 +27,16 @@ public interface BasicService {
 //        }
 //
 //    }
-    default ResponseDto getRestDto(Object o, String message){
+    default ResponseDto getRestDto(Object o, String message,LocalDateTime localDateTime){
         ResponseDto responseDto = ResponseDto.builder()
                 .message(message)
                 .data(o)
+                .localDateTime(localDateTime)
                 .build();
         return responseDto;
+    }
+    default LocalDateTime getLocalDateTimeNow(){
+        return LocalDateTime.now();
     }
 //    default String getResponseMessage(String message){
 //

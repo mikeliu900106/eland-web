@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Locale;
 @Data
 @Builder
@@ -14,5 +15,5 @@ import java.util.Locale;
 public class ResponseDto {
     private String message;
     private Object data;
-    private LocalDate localDate;
+    private LocalDateTime localDateTime;
 }

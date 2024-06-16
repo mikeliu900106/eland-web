@@ -1,17 +1,18 @@
 package com.example.elandweb.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Data
 @Entity
 @Table(name = "tag_info")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class TagInfoEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tag_id")
     private int tagId;
 
@@ -19,5 +20,5 @@ public class TagInfoEntity {
     private String tagName;
 
     @Column(name =  "type")
-    private String type;
+    private int type;
 }

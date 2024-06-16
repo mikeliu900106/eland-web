@@ -1,13 +1,16 @@
 package com.example.elandweb.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "channel_info")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ChannelInfoEntity {
     @Id
     @Column(name = "source_area_id")

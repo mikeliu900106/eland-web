@@ -1,12 +1,15 @@
 package com.example.elandweb.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 
 @Data
 @Entity
 @Table(name = "p_type_2")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class PType2Entity {
 
     @Id
