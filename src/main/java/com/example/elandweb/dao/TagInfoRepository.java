@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface TagInfoRepository extends JpaRepository<TagInfoEntity, Integer> {
         @Query(value = "SELECT * FROM tag_info LIMIT :limit OFFSET :offset  " , nativeQuery = true)
-        Optional<List<TagInfoEntity>> findTagInfo(@Param("limit") int limit, @Param("offset") int offset);
+        Optional<List<TagInfoEntity>> findAllPage(@Param("limit") int limit, @Param("offset") int offset);
 
 
 }

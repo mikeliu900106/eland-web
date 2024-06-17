@@ -3,7 +3,7 @@ package com.example.elandweb.service.impl;
 import com.example.elandweb.category.TagCategory;
 import com.example.elandweb.config.DataNotFoundException;
 import com.example.elandweb.dao.TagInfoRepository;
-import com.example.elandweb.dto.PageTagInfoDto;
+import com.example.elandweb.dto.PageDataDto;
 import com.example.elandweb.dto.ResponseDto;
 import com.example.elandweb.model.TagInfoEntity;
 import com.example.elandweb.service.TagInfoService;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -23,22 +22,22 @@ public class TagInfoServiceImpl implements TagInfoService {
     @Override
     public ResponseDto findAll(int page, int size) {
         int offset = getSelectOffset(page,size);
-        int limit = getSelectLimit(page, size);
-        List<TagInfoEntity> TagInfoEntities = tagInfoRepository.findTagInfo(limit,offset).orElseThrow(() -> new DataNotFoundException("找不到tag"))  ;
-        int total = TagInfoEntities.size();
-        PageTagInfoDto pageTagInfoDto = PageTagInfoDto.builder()
-                .tagInfoEntityList(TagInfoEntities)
+        int limit = size;
+        List<TagInfoEntity> TagInfoEntities = tagInfoRepository.findAllPage(limit,offset).orElseThrow(() -> new DataNotFoundException("找不到tag"))  ;
+        long total = tagInfoRepository.count();
+        PageDataDto pageTagInfoDto = PageDataDto.builder()
+                .basicEntity(TagInfoEntities)
                 .page(page)
                 .size(size)
                 .total(total)
                 .build();
-        ResponseDto responseDto = getRestDto(pageTagInfoDto,"查詢成功",getLocalDateTimeNow());
+        ResponseDto responseDto = getRestDto(pageTagInfoDto,"查詢成功");
         return responseDto;
     }
     @Override
     public ResponseDto findTagInfo(int tagId) {
         TagInfoEntity tagInfoEntity = tagInfoRepository.findById(tagId).orElseThrow(() -> new DataNotFoundException("找不到tag"));
-        ResponseDto responseDto = getRestDto(tagInfoEntity,"查詢成功",getLocalDateTimeNow());
+        ResponseDto responseDto = getRestDto(tagInfoEntity,"查詢成功");
         return responseDto;
     }
     @Override
@@ -53,7 +52,7 @@ public class TagInfoServiceImpl implements TagInfoService {
             tagInfosEntity.add(tagInfoEntity);
         });
         tagInfoRepository.saveAll(tagInfosEntity);
-        return getRestDto(tagInfosEntity,"新增成功",getLocalDateTimeNow());
+        return getRestDto(tagInfosEntity,"新增成功");
     }
     @Override
     public ResponseDto createTagInfo(TagCategory tagCategory) {
@@ -63,7 +62,7 @@ public class TagInfoServiceImpl implements TagInfoService {
                 .type(tagCategory.getType())
                 .build();
         TagInfoEntity insertTagInfoEntity = tagInfoRepository.save(tagInfoEntity);
-        ResponseDto responseDto = getRestDto(insertTagInfoEntity,"新增成功",getLocalDateTimeNow());
+        ResponseDto responseDto = getRestDto(insertTagInfoEntity,"新增成功");
         return responseDto;
     }
     @Override
@@ -74,7 +73,7 @@ public class TagInfoServiceImpl implements TagInfoService {
                 .type(tagCategory.getType())
                 .build();
         TagInfoEntity insertTagInfoEntity = tagInfoRepository.save(tagInfoEntity);
-        ResponseDto responseDto = getRestDto(insertTagInfoEntity,"更新成功",getLocalDateTimeNow());
+        ResponseDto responseDto = getRestDto(insertTagInfoEntity,"更新成功");
         return responseDto;
     }
 
@@ -82,7 +81,7 @@ public class TagInfoServiceImpl implements TagInfoService {
     public ResponseDto deleteTagInfo(int tagId) {
         TagInfoEntity TagInfoEntity = tagInfoRepository.findById(tagId).orElseThrow(()-> new DataNotFoundException("沒有該筆資料"));
         tagInfoRepository.deleteById(tagId);
-        ResponseDto responseDto = getRestDto(tagId,"更新成功",getLocalDateTimeNow());
+        ResponseDto responseDto = getRestDto(TagInfoEntity,"更新成功");
         return responseDto;
     }
 }

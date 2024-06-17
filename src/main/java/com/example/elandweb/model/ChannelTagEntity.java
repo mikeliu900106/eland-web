@@ -9,13 +9,12 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChannelTagEntity {
-    @ManyToOne
+public class ChannelTagEntity extends BasicEntity{
+
     @JoinColumn(name = "s_area_id")
-    private ChannelInfoEntity channelInfo;
+    private String sAreaId;
 
     @Id
-    @OneToOne
-    @JoinColumn(name = "tag_id")
-    private TagInfoEntity tagInfo;
+    @Column(name = "tag_id")
+    private String tagId;
 }

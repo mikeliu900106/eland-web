@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChannelInfoEntity {
+public class ChannelInfoEntity extends BasicEntity{
     @Id
     @Column(name = "source_area_id")
     private String sourceAreaId;
@@ -19,10 +19,10 @@ public class ChannelInfoEntity {
     @Column(name = "is_used")
     private boolean isUsed;
 
-    @OneToOne
-    @JoinColumn(name="p_type_2")
-    private PType2Entity pType2List;
 
-    @OneToMany(mappedBy = "channelInfo")
-    private List<ChannelTagEntity> channelTagMappingList;
+    @Column(name="p_type_2")
+    private String PType2;
+
+    @Column(name="source_id")
+    private String source_id;
 }

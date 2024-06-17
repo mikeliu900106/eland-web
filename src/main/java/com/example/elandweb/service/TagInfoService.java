@@ -7,15 +7,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
 public interface TagInfoService extends BasicService {
         ResponseDto findAll(int page, int size);
         ResponseDto createTagInfos(List<TagCategory> tagCategories);
         ResponseDto createTagInfo(TagCategory tagCategory);
         ResponseDto updateTagInfo(int tagId, TagCategory tagCategory);
-
         ResponseDto deleteTagInfo(int tagId);
-
         ResponseDto findTagInfo(int tagId);
 
 //        createTagInfos(TagInfoDto tagInfoDto);

@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PType2Entity {
+public class PType2Entity extends  BasicEntity{
 
     @Id
     @Column(name = "category")

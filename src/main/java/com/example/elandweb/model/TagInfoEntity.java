@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TagInfoEntity {
+public class TagInfoEntity extends BasicEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

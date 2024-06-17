@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TagInfoController {
     private final TagInfoService tagInfoService;
-    @GetMapping(value = "tagInfos")
+    @GetMapping(value = "/tagInfos")
     public ResponseEntity<ResponseDto> findAll(
             @RequestParam(defaultValue = "1" ,required = false  ) int page,
             @RequestParam(defaultValue = "10",required = false ) int size

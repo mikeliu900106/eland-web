@@ -13,5 +13,5 @@ import lombok.experimental.SuperBuilder;
 public class PageDto {
     private int page;
     private int size;
-    private int total;
+    private long total;
 }
