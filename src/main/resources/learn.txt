@@ -1,0 +1,10 @@
+sql
+    1.case 有點想把東西切成各種小事件通常搭配 sum() avg()憶起使用
+    2.WITH ROLLUP 是group分組之後再把他們加起來
+    3.sql藥安全模式關掉才能delete所有資料
+    4.auto increment 如果資料重複import起始值不會從1開始
+    5.UNION 把兩個表合起來,此是這題的陷阱
+spring
+    1.aop @around 跟@before要看熟
+
+

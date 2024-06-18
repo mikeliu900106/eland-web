@@ -1,0 +1,344 @@
+{
+	"info": {
+		"_postman_id": "42e11e58-d025-4d5f-adbf-de1bb895915b",
+		"name": "eland_web",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33960273"
+	},
+	"item": [
+		{
+			"name": "tagInfos",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/tagInfos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tagInfos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAll Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/tagInfo/63",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tagInfo",
+								"63"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createTagInfos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n    \"tagName\": \"EWQEQWW\",\r\n    \"type\": \"1\"\r\n    },\r\n    {\r\n    \"tagName\": \"天WWW才事件\",\r\n    \"type\": \"1\"\r\n    },\r\n    {\r\n    \"tagName\": \"WQEQW\",\r\n    \"type\": \"1\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/tagInfos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tagInfos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createTagInfo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n    \"tagName\": \"EWQEQWW\",\r\n    \"type\": \"1\"\r\n    },\r\n    {\r\n    \"tagName\": \"天WWW才事件\",\r\n    \"type\": \"1\"\r\n    },\r\n    {\r\n    \"tagName\": \"WQEQW\",\r\n    \"type\": \"1\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/tagInfos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tagInfos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateTagInfo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n    {\r\n    \"tagName\": \"EWQEQWW\",\r\n    \"type\": \"1\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/tagInfo/67",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tagInfo",
+								"67"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateTagInfo Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n    \"tagName\": \"EWQEQWW\",\r\n    \"type\": \"1\"\r\n    },\r\n    {\r\n    \"tagName\": \"天WWW才事件\",\r\n    \"type\": \"1\"\r\n    },\r\n    {\r\n    \"tagName\": \"WQEQW\",\r\n    \"type\": \"1\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/tagInfos/67",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tagInfos",
+								"67"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "channelInfo",
+			"item": [
+				{
+					"name": "createChannelInfo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\t\t\"sourceId\": \"WH_CTM0001\",\r\n\t\t\t\"isUsed\": 1,\r\n\t\t\t\"typeEnum\": \"BLOG\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/channelInfo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"channelInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createChannelInfos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n\t\t\"sourceId\": \"WH_CTM0003\",\r\n\t\t\"isUsed\": 1,\r\n\t\t\"typeEnum\": \"BLOG\"\r\n    },\r\n    {\r\n\t\t\"sourceId\": \"WH_CTM0004\",\r\n\t\t\"isUsed\": 1,\r\n\t\t\"typeEnum\": \"BLOG\"\r\n    }\r\n    \r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/channelInfos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"channelInfos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createChannelInfo Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\t\t\"sourceId\": \"WH_CTM0001\",\r\n\t\t\t\"isUsed\": 1,\r\n\t\t\t\"typeEnum\": \"BLOG\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/channelInfo/WH_CTM0001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"channelInfo",
+								"WH_CTM0001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createChannelInfo Copy 2",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\t\t\"sourceId\": \"WH_CTM0001\",\r\n\t\t\t\"isUsed\": 1,\r\n\t\t\t\"typeEnum\": \"BLOG\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/channelInfo/WH_CTM0001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"channelInfo",
+								"WH_CTM0001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findtarget",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/target?typeCategoryEnum=BLOG",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"target"
+							],
+							"query": [
+								{
+									"key": "typeCategoryEnum",
+									"value": "BLOG"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findtchannelInfo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/channelInfo/WH_B0002_0015973213",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"channelInfo",
+								"WH_B0002_0015973213"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
