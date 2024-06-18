@@ -6,6 +6,9 @@ import com.example.elandweb.model.TagNameEnum;
 import com.example.elandweb.model.TypeEnum;
 import com.example.elandweb.service.ChannelInfoService;
 import lombok.RequiredArgsConstructor;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,14 +18,16 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 public class ChannelInfoController {
+    private static final Logger LOG = LogManager.getLogger(ChannelInfoController.class.getName());
 
     private final ChannelInfoService channelInfoService;
-    @GetMapping(value = "/channelInfoAll")
+    @GetMapping(value = "/target")
     public ResponseEntity<ResponseDto> findAllTable(
             @RequestParam(defaultValue = "",required = false) Optional<TypeEnum> typeCategoryEnum,
-            @RequestParam(defaultValue = "",required = false) Optional<TagNameEnum> tagNameEnum
+            @RequestParam(defaultValue = "",required = false) Optional<TagNameEnum> tagNameEnum,
+            @RequestParam(defaultValue = "false",required = false) String HandleDownload
             ){
-        return ResponseEntity.ok(channelInfoService.findAllTable(typeCategoryEnum,tagNameEnum));
+        return ResponseEntity.ok(channelInfoService.findTargetByTagNameAndType(typeCategoryEnum,tagNameEnum,HandleDownload ));
     }
     @GetMapping(value = "/channelInfos")
     public ResponseEntity<ResponseDto> findAll(
@@ -41,19 +46,24 @@ public class ChannelInfoController {
     public ResponseEntity<ResponseDto> createChannelInfo(
             @RequestBody ChannelInfoCategory channelInfoCategory
     ){
-        return ResponseEntity.ok(channelInfoService.createChannelInfo(channelInfoCategory));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(channelInfoService.createChannelInfo(channelInfoCategory));
     }
     @PostMapping(value = "/channelInfos")
     public ResponseEntity<ResponseDto> createChannelInfos(
             @RequestBody List<ChannelInfoCategory> channelInfosCategory
     ){
-        return ResponseEntity.ok(channelInfoService.createChannelInfos(channelInfosCategory));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(channelInfoService.createChannelInfos(channelInfosCategory));
     }
     @PutMapping(value = "/channelInfo/{sourceAreaId}")
     public ResponseEntity<ResponseDto> updateChannelInfo(
             @PathVariable String sourceAreaId,
             @RequestBody ChannelInfoCategory channelInfoCategory
     ){
+
         return ResponseEntity.ok(channelInfoService.updateChannelInfo(sourceAreaId,channelInfoCategory ));
     }
     @DeleteMapping(value = "/channelInfo/{sourceAreaId}")

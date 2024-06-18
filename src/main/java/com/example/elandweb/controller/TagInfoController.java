@@ -4,6 +4,7 @@ import com.example.elandweb.category.TagCategory;
 import com.example.elandweb.dto.ResponseDto;
 import com.example.elandweb.service.TagInfoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,13 +31,17 @@ public class TagInfoController {
     public ResponseEntity<ResponseDto> createTagInfo(
             @RequestBody TagCategory tagCategory
     ){
-        return ResponseEntity.ok(tagInfoService.createTagInfo(tagCategory));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(tagInfoService.createTagInfo(tagCategory));
     }
     @PostMapping("/tagInfos")
     public ResponseEntity<ResponseDto> createTagInfos(
             @RequestBody List<TagCategory> tagCategories
     ){
-        return ResponseEntity.ok(tagInfoService.createTagInfos(tagCategories));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(tagInfoService.createTagInfos(tagCategories));
     }
     @PutMapping("/tagInfo/{tagId}")
     public ResponseEntity<ResponseDto> updateTagInfo(

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 
 public interface ChannelInfoService extends BasicService{
-    ResponseDto findAllTable(Optional<TypeEnum> typeCategoryEnum, Optional<TagNameEnum> tagNameEnum);
+    ResponseDto findTargetByTagNameAndType(Optional<TypeEnum> typeCategoryEnum, Optional<TagNameEnum> tagNameEnum, String HandleDownload);
 
     ResponseDto findAllPage(int page, int size);
 

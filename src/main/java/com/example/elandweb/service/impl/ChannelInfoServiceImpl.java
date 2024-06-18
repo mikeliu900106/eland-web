@@ -3,24 +3,36 @@ package com.example.elandweb.service.impl;
 import com.example.elandweb.category.ChannelInfoCategory;
 import com.example.elandweb.config.DataNotFoundException;
 import com.example.elandweb.dao.ChannelInfoRepository;
+import com.example.elandweb.dao.TargetDao;
 import com.example.elandweb.dto.PageDataDto;
 import com.example.elandweb.dto.ResponseDto;
+import com.example.elandweb.dto.TargetDto;
 import com.example.elandweb.model.ChannelInfoEntity;
 import com.example.elandweb.model.TagNameEnum;
 import com.example.elandweb.model.TypeEnum;
 import com.example.elandweb.service.ChannelInfoService;
+import com.opencsv.CSVWriter;
 import lombok.RequiredArgsConstructor;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ChannelInfoServiceImpl implements ChannelInfoService {
+    private static final Logger logger = Logger.getLogger(ChannelInfoServiceImpl.class);
     private final ChannelInfoRepository channelInfoRepository;
+    private final TargetDao targetDao;
+    private static final String EXPORT_FILE = "C:\\test\\export";
     @Override
-        public ResponseDto findAllTable(Optional<TypeEnum> typeCategoryEnum, Optional<TagNameEnum> tagNameEnum) {
+        public ResponseDto findTargetByTagNameAndType(Optional<TypeEnum> typeCategoryEnum, Optional<TagNameEnum> tagNameEnum, String HandleDownload) {
         String type = null;
         String tagName = null;
         if(!typeCategoryEnum.isEmpty()){
@@ -29,11 +41,13 @@ public class ChannelInfoServiceImpl implements ChannelInfoService {
         if(!tagNameEnum.isEmpty()){
             tagName = tagNameEnum.get().name();
         }
-
-
-
-        return null;
-
+        List<TargetDto> targetsDto = targetDao.findTargetByTagNameAndType(tagName,type);
+        System.out.println(targetsDto);
+        if(HandleDownload.equals("true")){
+            logger.warn("匯出csv檔案");
+            exportToCsv(targetsDto,EXPORT_FILE);
+        }
+        return getRestDto(targetsDto,"查詢完成");
     }
 
     @Override
@@ -151,5 +165,35 @@ public class ChannelInfoServiceImpl implements ChannelInfoService {
                     .build();
         }
         channelInfoRepository.save(insertChannelInfoEntity);
+    }
+    private void exportToCsv(List<TargetDto>targets, String filePath) {
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HHmmss"));
+        String newFilePath = filePath+"\\"+timestamp;
+        createDir(newFilePath);
+        String PathName = newFilePath + "\\" + "target.txt";
+        try (CSVWriter writer = new CSVWriter(new FileWriter(PathName))) {
+            writer.writeNext(new String[]{"標籤", "新聞", "部落格", "討論區", "社群網站", "評論", "問答網站", "影音"});
+
+            for (TargetDto target : targets) {
+                writer.writeNext(new String[]{
+                        target.getTagName(),
+                        String.valueOf(target.getNewsCount()),
+                        String.valueOf(target.getBlogCount()),
+                        String.valueOf(target.getForumCount()),
+                        String.valueOf(target.getSocialCount()),
+                        String.valueOf(target.getCommentCount()),
+                        String.valueOf(target.getQaCount()),
+                        String.valueOf(target.getVideoCount())
+                });
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void createDir(String path){
+        File directory = new File(path);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
     }
 }

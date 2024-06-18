@@ -1,6 +1,7 @@
 package com.example.elandweb.service.impl;
 
 import com.example.elandweb.category.TagCategory;
+
 import com.example.elandweb.config.DataNotFoundException;
 import com.example.elandweb.dao.TagInfoRepository;
 import com.example.elandweb.dto.PageDataDto;
@@ -8,6 +9,7 @@ import com.example.elandweb.dto.ResponseDto;
 import com.example.elandweb.model.TagInfoEntity;
 import com.example.elandweb.service.TagInfoService;
 import lombok.RequiredArgsConstructor;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import java.util.List;
 public class TagInfoServiceImpl implements TagInfoService {
 
     private final TagInfoRepository tagInfoRepository;
+    private static final Logger logger = Logger.getLogger(TagInfoServiceImpl.class);
 
     @Override
     public ResponseDto findAll(int page, int size) {
