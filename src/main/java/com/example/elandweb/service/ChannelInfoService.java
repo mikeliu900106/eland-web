@@ -5,6 +5,9 @@ import com.example.elandweb.dto.ResponseDto;
 import com.example.elandweb.model.TagNameEnum;
 import com.example.elandweb.model.TypeEnum;
 
+import java.io.BufferedInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,4 +28,5 @@ public interface ChannelInfoService extends BasicService{
     ResponseDto deleteChannelInfo(String sourceAreaId);
 
 
+    byte[] download(Optional<TypeEnum> typeCategoryEnum, Optional<TagNameEnum> tagNameEnum, String handleDownload) throws IOException;
 }

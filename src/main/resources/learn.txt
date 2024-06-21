@@ -6,5 +6,7 @@ sql
     5.UNION 把兩個表合起來,此是這題的陷阱
 spring
     1.aop @around 跟@before要看熟
+log
+    放檔案的地方最好是相對路徑不然你放不同地方就會壞掉
 
 

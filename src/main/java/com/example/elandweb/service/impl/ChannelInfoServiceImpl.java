@@ -16,9 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -117,6 +116,15 @@ public class ChannelInfoServiceImpl implements ChannelInfoService {
         return getRestDto(channelInfoEntity,"刪除成功");
     }
 
+    @Override
+    public byte[] download(Optional<TypeEnum> typeCategoryEnum, Optional<TagNameEnum> tagNameEnum, String handleDownload) throws IOException {
+        ResponseDto responseDto = findTargetByTagNameAndType(typeCategoryEnum,tagNameEnum,handleDownload);
+        String filePath = exportToCsv((List<TargetDto>) responseDto.getData(),EXPORT_FILE);
+        File file = new File(filePath);
+        byte[] data = Files.readAllBytes(file.toPath());
+        return data;
+    }
+
     private void saveChannelInfo(ChannelInfoRepository channelInfoRepository, ChannelInfoEntity insertChannelInfoEntity, ChannelInfoCategory channelInfoCategory, Optional<ChannelInfoEntity> lastChannelInfo) {
         String ptype = null;
         if (channelInfoCategory.getTypeEnum().isEmpty()) {
@@ -166,11 +174,12 @@ public class ChannelInfoServiceImpl implements ChannelInfoService {
         }
         channelInfoRepository.save(insertChannelInfoEntity);
     }
-    private void exportToCsv(List<TargetDto>targets, String filePath) {
-        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HHmmss"));
-        String newFilePath = filePath+"\\"+timestamp;
+    private String exportToCsv(List<TargetDto>targets, String filePath) {
+        String  Date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'"));
+        String  timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HHmmss"));
+        String newFilePath = filePath+"\\"+Date;
         createDir(newFilePath);
-        String PathName = newFilePath + "\\" + "target.txt";
+        String PathName = newFilePath + "\\" + timestamp + "target.txt";
         try (CSVWriter writer = new CSVWriter(new FileWriter(PathName))) {
             writer.writeNext(new String[]{"標籤", "新聞", "部落格", "討論區", "社群網站", "評論", "問答網站", "影音"});
 
@@ -186,10 +195,15 @@ public class ChannelInfoServiceImpl implements ChannelInfoService {
                         String.valueOf(target.getVideoCount())
                 });
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return PathName;
+
+
     }
+
     private void createDir(String path){
         File directory = new File(path);
         if (!directory.exists()) {
