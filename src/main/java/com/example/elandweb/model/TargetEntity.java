@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class TargetEntity {
     @Id
     @Column(name = "tag_name")
-    private String tagName;
+    private String tagNameEnum;
     @Column(name = "news_count")
     private int news;
     @Column(name = "blog_count")

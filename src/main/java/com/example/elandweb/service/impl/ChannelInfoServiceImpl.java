@@ -44,53 +44,24 @@ public class ChannelInfoServiceImpl implements ChannelInfoService {
 
     @Override
     public ResponseDto findTargetByTagNameAndType(Optional<TypeEnum> typeCategoryEnum, Optional<TagNameEnum> tagNameEnum, String HandleDownload) {
-//        List<TargetEntity> TargetsEntity = targetRepository.findAll();
-//        logger.debug("TargetsEntity:"+TargetsEntity);
-//        logger.debug("typeCategoryEnum:" + typeCategoryEnum);
-//        logger.debug("tagNameEnum:" + tagNameEnum);
-        ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
-        FutureTask<List<TargetEntity>> futureTask = new FutureTask<>(()->{
-            return  targetRepository.findAll();
-        });
-        Future<?> submit = cachedThreadPool.submit(futureTask);
-        try {
-            List<TargetEntity> result = (List<TargetEntity>) submit.get(); // 阻塞等待任务完成并获取结果
-            logger.warn("TargetEntity:"+result);
-            // 在这里处理正常执行的结果
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt(); // 重新设置线程中断状态
-            // 处理线程被中断的情况
-        } catch (ExecutionException e) {
-            // 处理任务执行过程中抛出的异常
-            Throwable cause = e.getCause(); // 获取实际的异常原因
-            // 根据具体情况进行异常处理
-        } finally {
-            cachedThreadPool.shutdown(); // 关闭线程池
+        List<TargetEntity> TargetsEntity = targetRepository.findAll();
+        logger.debug("TargetsEntity:" + TargetsEntity);
+        String type = typeCategoryEnum.isPresent() ? typeCategoryEnum.get().getCode() : null;
+        String tagName = tagNameEnum.isPresent() ? tagNameEnum.get().name() : null;
+        if(type != null){
+            TargetsEntity = TargetsEntity.stream().map((targetEntity -> {
+                if
+            }).toList();
         }
-//        List<TargetEntity> TargetsEntity = null;
-//        try {
-//            TargetsEntity = (List<TargetEntity>) submit.get();
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException("執行緒中斷");
-//        } catch (ExecutionException e) {
-//            throw new RuntimeException("執行緒錯誤");
-//        }finally {
-//            cachedThreadPool.shutdown();
-//        }
-//        String type = null;
-//        String tagName = null;
-//        if (!typeCategoryEnum.isEmpty()) {
-//            type = typeCategoryEnum.get().getCode();
-//        }
-//        if (!tagNameEnum.isEmpty()) {
-//            tagName = tagNameEnum.get().name();
-//        }
-//        logger.debug(TargetsEntity);
+        if(tagName!= null){
+            TargetsEntity = TargetsEntity.stream().f
+        }
+        logger.debug(TargetsEntity);
 
-//        if (HandleDownload.equals("true")) {
-//            logger.warn("匯出csv檔案");
-//            exportToCsv(targetsEntity, EXPORT_PATH);
-//        }
+        if (HandleDownload.equals("true")) {
+            logger.warn("匯出csv檔案");
+            exportToCsv(targetsEntity, EXPORT_PATH);
+        }
 //        return getRestDto(targetsEntity, "查詢完成");
         return null;
     }
@@ -240,7 +211,7 @@ public class ChannelInfoServiceImpl implements ChannelInfoService {
 
             for (TargetEntity targetEntity : targetsEntity) {
                 writer.writeNext(new String[]{
-                        targetEntity.getTagName(),
+                        String.valueOf(targetEntity.getTagNameEnum()),
                         String.valueOf(targetEntity.getNews()),
                         String.valueOf(targetEntity.getBlog()),
                         String.valueOf(targetEntity.getForum()),
