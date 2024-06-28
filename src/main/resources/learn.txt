@@ -8,5 +8,8 @@ spring
     1.aop @around 跟@before要看熟
 log
     放檔案的地方最好是相對路徑不然你放不同地方就會壞掉
+java
+    1.files.find通常找不到空資料夾(用walk解決)
+    2.
 
 

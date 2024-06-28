@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChannelTagEntity extends BasicEntity{
+public class    ChannelTagEntity extends BasicEntity{
 
     @JoinColumn(name = "s_area_id")
     private String sAreaId;

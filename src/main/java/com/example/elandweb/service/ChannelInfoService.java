@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 
 public interface ChannelInfoService extends BasicService{
@@ -26,7 +27,6 @@ public interface ChannelInfoService extends BasicService{
     ResponseDto updateChannelInfo(String sourceAreaId,ChannelInfoCategory channelInfoCategory);
 
     ResponseDto deleteChannelInfo(String sourceAreaId);
-
 
     byte[] download(Optional<TypeEnum> typeCategoryEnum, Optional<TagNameEnum> tagNameEnum, String handleDownload) throws IOException;
 }

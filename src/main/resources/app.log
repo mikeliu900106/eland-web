@@ -1,8 +1,3 @@
-2024/06/21 14:14:55 com.example.elandweb.service.impl.ChannelInfoServiceImpl WARN  匯出csv檔案
-2024/06/21 14:16:47 com.example.elandweb.service.impl.ChannelInfoServiceImpl WARN  匯出csv檔案
-2024/06/21 14:20:47 com.example.elandweb.service.impl.ChannelInfoServiceImpl WARN  匯出csv檔案
-2024/06/21 14:24:08 com.example.elandweb.service.impl.ChannelInfoServiceImpl WARN  匯出csv檔案
-2024/06/21 14:24:55 com.example.elandweb.service.impl.ChannelInfoServiceImpl WARN  匯出csv檔案
-2024/06/21 14:25:12 com.example.elandweb.service.impl.ChannelInfoServiceImpl WARN  匯出csv檔案
-2024/06/21 14:25:27 com.example.elandweb.service.impl.ChannelInfoServiceImpl WARN  匯出csv檔案
-2024/06/21 14:25:50 com.example.elandweb.service.impl.ChannelInfoServiceImpl WARN  匯出csv檔案
+2024/06/26 15:57:12 com.example.elandweb.scheduled.FileDeleteScheduled WARN  檔案是否刪除:true
+2024/06/26 15:57:12 com.example.elandweb.scheduled.FileDeleteScheduled WARN  要被刪除的檔案:C:\test\export\tag_info
+2024/06/26 15:57:12 com.example.elandweb.scheduled.FileDeleteScheduled WARN  檔案是否刪除:true

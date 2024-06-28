@@ -11,6 +11,6 @@ public class ExceptionAspect {
     public void logMethodCall(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         String className = joinPoint.getSignature().getDeclaringTypeName();
-        logger.info("api Method " + className + "." + methodName + " .");
+        logger.warn("api Method " + className + "." + methodName + " .");
     }
 }

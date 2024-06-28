@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(code = HttpStatus.NOT_FOUND)
+//@ResponseStatus(code = HttpStatus.NOT_FOUND)
 public class DataNotFoundException extends RuntimeException{
     private static final Logger logger = Logger.getLogger(DataNotFoundException.class);
     public DataNotFoundException(String msg){
