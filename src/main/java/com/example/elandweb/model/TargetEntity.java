@@ -20,17 +20,19 @@ public class TargetEntity {
     @Column(name = "tag_name")
     private String tagNameEnum;
     @Column(name = "news_count")
-    private int news;
+    private int newsCount;
     @Column(name = "blog_count")
-    private int blog;
+    private int blogCount;
     @Column(name = "forum_count")
-    private int forum;
+    private int forumCount;
     @Column(name = "social_count")
-    private int social;
+    private int socialCount;
     @Column(name = "comment_count")
-    private int comment;
+    private int commentCount;
     @Column(name = "qa_count")
-    private int qa;
+    private int qaCount;
     @Column(name = "video_count")
-    private int video;
+    private int videoCount;
+    @Column(name = "type")
+    private short type;
 }

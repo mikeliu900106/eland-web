@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
@@ -46,15 +46,19 @@ public class ChannelInfoServiceImpl implements ChannelInfoService {
     public ResponseDto findTargetByTagNameAndType(Optional<TypeEnum> typeCategoryEnum, Optional<TagNameEnum> tagNameEnum, String HandleDownload) {
         List<TargetEntity> TargetsEntity = targetRepository.findAll();
         logger.debug("TargetsEntity:" + TargetsEntity);
-        String type = typeCategoryEnum.isPresent() ? typeCategoryEnum.get().getCode() : null;
-        String tagName = tagNameEnum.isPresent() ? tagNameEnum.get().name() : null;
-        if(type != null){
-            TargetsEntity = TargetsEntity.stream().map((targetEntity -> {
-                if
+        TypeEnum type = typeCategoryEnum.isPresent() ? typeCategoryEnum.get() : null;
+        TagNameEnum tagName = tagNameEnum.isPresent() ? tagNameEnum.get() : null;
+        if (type != null) {
+            TargetsEntity = TargetsEntity.stream().map(targetEntity -> {
+
+
+                //1判斷targetEntity可以顯示類型
+                //2把該欄位變成0
+
             }).toList();
         }
-        if(tagName!= null){
-            TargetsEntity = TargetsEntity.stream().f
+        if (tagName != null) {
+            TargetsEntity = TargetsEntity.stream()
         }
         logger.debug(TargetsEntity);
 

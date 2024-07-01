@@ -25,7 +25,8 @@ public class TargetDaoImpl implements TargetDao {
                         "    SUM(CASE WHEN ci.p_type_2 = 'social' THEN 1 ELSE 0 END) AS '社群網站',\n" +
                         "    SUM(CASE WHEN ci.p_type_2 = 'comment' THEN 1 ELSE 0 END) AS '評論',\n" +
                         "     SUM(CASE WHEN ci.p_type_2 = 'qa' THEN 1 ELSE 0 END) AS '問答網站',\n" +
-                        "    SUM(CASE WHEN ci.p_type_2 = 'video' THEN 1 ELSE 0 END) AS '影音'\n" +
+                        "    SUM(CASE WHEN ci.p_type_2 = 'video' THEN 1 ELSE 0 END) AS '影音',\n" +
+                        "   ti.type\n" +
                         "FROM\n" +
                         "    channel_info ci\n" +
                         "    JOIN channel_tag_mapping ctm ON ci.source_area_id = ctm.s_area_id\n" +
@@ -46,6 +47,7 @@ public class TargetDaoImpl implements TargetDao {
                         "    SUM(CASE WHEN ci.p_type_2 = 'comment' THEN 1 ELSE 0 END) AS '評論',\n" +
                         "    SUM(CASE WHEN ci.p_type_2 = 'qa' THEN 1 ELSE 0 END) AS '問答網站',\n" +
                         "    SUM(CASE WHEN ci.p_type_2 = 'video' THEN 1 ELSE 0 END) AS '影音'\n" +
+                        "   ti.type\n" +
                         "FROM\n" +
                         "    channel_info ci\n" +
                         "    JOIN channel_tag_mapping ctm ON ci.source_area_id = ctm.s_area_id\n" +
