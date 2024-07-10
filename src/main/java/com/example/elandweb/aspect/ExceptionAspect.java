@@ -7,10 +7,10 @@ import org.aspectj.lang.annotation.Before;
 public class ExceptionAspect {
     private static final Logger logger = Logger.getLogger(ControllerAspect.class);
 
-    @Before("execution(* com.example.elandweb.config.*.*(..))")
+    @Before("execution(* com.example.elandweb.config.MyExceptionHandler.*(..))")
     public void logMethodCall(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         String className = joinPoint.getSignature().getDeclaringTypeName();
-        logger.warn("api Method " + className + "." + methodName + " .");
+        logger.error("api Method " + className + "." + methodName + " .");
     }
 }

@@ -11,6 +11,7 @@ import com.example.elandweb.model.TagNameEnum;
 import com.example.elandweb.model.TargetEntity;
 import com.example.elandweb.model.TypeEnum;
 import com.example.elandweb.service.ChannelInfoService;
+import com.example.elandweb.util.TargetUtil;
 import com.opencsv.CSVWriter;
 import lombok.RequiredArgsConstructor;
 import org.apache.log4j.Logger;
@@ -43,40 +44,66 @@ public class ChannelInfoServiceImpl implements ChannelInfoService {
     private String EXPORT_PATH;
 
     @Override
-    public ResponseDto findTargetByTagNameAndType(Optional<TypeEnum> typeCategoryEnum, Optional<TagNameEnum> tagNameEnum, String HandleDownload) {
-        List<TargetEntity> TargetsEntity = targetRepository.findAll();
-        logger.debug("TargetsEntity:" + TargetsEntity);
+    public ResponseDto findTargetByTagNameAndType(Optional<TypeEnum> typeCategoryEnum, Optional<TagNameEnum> tagNameEnum, String handleDownload) {
+        List<TargetEntity> targetsEntity = targetRepository.findAll();
+        logger.debug("TargetsEntity:" + targetsEntity);
         TypeEnum type = typeCategoryEnum.isPresent() ? typeCategoryEnum.get() : null;
         TagNameEnum tagName = tagNameEnum.isPresent() ? tagNameEnum.get() : null;
+
         if (type != null) {
-            TargetsEntity = TargetsEntity.stream().map(targetEntity -> {
-
-
-                //1判斷targetEntity可以顯示類型
-                //2把該欄位變成0
-
-            }).toList();
+            try {
+                TargetUtil targetUtil = new TargetUtil();
+                List<String> BeChooseTypes = targetUtil.chooseNotInType(type);
+                logger.debug("被選擇type的list" + BeChooseTypes);
+                logger.debug("還沒被變成0的list" + targetsEntity);
+                targetUtil.setChooseFieldsToZero(BeChooseTypes, targetsEntity);
+                logger.debug("已被變成0的list" + targetsEntity);
+            } catch (ClassNotFoundException e) {
+                logger.warn("找不到該class");
+                throw new RuntimeException(e);
+            } catch (IllegalAccessException e) {
+                logger.warn("方法反射異常");
+                throw new RuntimeException(e);
+            }
         }
         if (tagName != null) {
-            TargetsEntity = TargetsEntity.stream()
-        }
-        logger.debug(TargetsEntity);
+            logger.debug("targetsEntity前面:" + targetsEntity);
 
-        if (HandleDownload.equals("true")) {
+            TargetEntity beCatchEntity = targetsEntity.stream().filter((targetEntity) -> {
+                return targetEntity.getTagName().equals(tagName.toString());
+            }).findAny().orElseThrow(() -> new DataNotFoundException("找不到此tag"));
+
+            TargetEntity cloneTargetEntity = beCatchEntity.clone();
+            TargetEntity noParameterConstructorTargetEntity = new TargetEntity();
+            if (beCatchEntity.getType() == 1) {
+                cloneTargetEntity.setTagName("內容標籤");
+                noParameterConstructorTargetEntity.setTagName("屬性標籤");
+            } else {
+                cloneTargetEntity.setTagName("屬性標籤");
+                noParameterConstructorTargetEntity.setTagName("內容標籤");
+            }
+            logger.debug("targetsEntity clear前:" + targetsEntity);
+            targetsEntity.clear();
+            logger.debug("targetsEntity clear後:" + targetsEntity);
+            targetsEntity.add(beCatchEntity);
+            targetsEntity.add(noParameterConstructorTargetEntity);
+            targetsEntity.add(cloneTargetEntity);
+        }
+        logger.debug("targetsEntity最後:" + targetsEntity);
+
+        if (handleDownload.equals("true")) {
             logger.warn("匯出csv檔案");
             exportToCsv(targetsEntity, EXPORT_PATH);
         }
-//        return getRestDto(targetsEntity, "查詢完成");
-        return null;
+        return getRestDto(targetsEntity, "查詢完成");
     }
 
     @Override
     public ResponseDto findAllPage(int page, int size) {
         int offset = getSelectOffset(page, size);
-        int limit = size;
         logger.debug("page:" + page);
         logger.debug("offset:" + offset);
-        List<ChannelInfoEntity> channelInfosEntity = channelInfoRepository.findAllPage(limit, offset).orElseThrow(() -> new DataNotFoundException("資料沒找到"));
+        List<ChannelInfoEntity> channelInfosEntity = channelInfoRepository.findAllPage(size, offset).orElseThrow(() -> new DataNotFoundException("資料沒找到"));
         long total = channelInfoRepository.count();
         PageDataDto pageDataDto = getPageDataDto(page, size, total, channelInfosEntity);
         logger.debug("channelInfosEntity:" + channelInfosEntity);
@@ -92,9 +119,11 @@ public class ChannelInfoServiceImpl implements ChannelInfoService {
     @Override
     public ResponseDto createChannelInfo(ChannelInfoCategory channelInfoCategory) {
         ChannelInfoEntity insertChannelInfoEntity = null;
-        Optional<ChannelInfoEntity> lastChannelInfo = channelInfoRepository.findLastChannelInfo(channelInfoCategory.getSourceId());
+        Optional<ChannelInfoEntity> lastChannelInfo = channelInfoRepository
+                .findLastChannelInfo(channelInfoCategory.getSourceId());
         logger.debug(channelInfoCategory.getSourceId());
-        ChannelInfoEntity channelInfoEntity = saveChannelInfo(insertChannelInfoEntity, channelInfoCategory, lastChannelInfo);
+        ChannelInfoEntity channelInfoEntity =
+                saveChannelInfo(insertChannelInfoEntity, channelInfoCategory, lastChannelInfo);
         channelInfoRepository.save(channelInfoEntity);
         return getRestDto(channelInfoEntity, "新增成功");
     }
@@ -127,7 +156,7 @@ public class ChannelInfoServiceImpl implements ChannelInfoService {
                     .builder()
                     .source_id(channelInfoCategory.getSourceId())
                     .sourceAreaId(sourceAreaId.toString())
-                    .isUsed(channelInfoCategory.isUsed())
+                    .isUsed(true)
                     .PType2(ptype)
                     .build();
         } else {
@@ -153,7 +182,7 @@ public class ChannelInfoServiceImpl implements ChannelInfoService {
                     .builder()
                     .source_id(channelInfoCategory.getSourceId())
                     .sourceAreaId(newChannelInfoSourceAreaId)
-                    .isUsed(channelInfoCategory.isUsed())
+                    .isUsed(true)
                     .PType2(ptype)
                     .build();
         }
@@ -175,12 +204,7 @@ public class ChannelInfoServiceImpl implements ChannelInfoService {
                 .PType2(pType)
                 .isUsed(channelInfoCategory.isUsed())
                 .build();
-        try {
-            lock.lock();
-            insertChannelInfoEntity = channelInfoRepository.save(channelInfoEntity);
-        } finally {
-            lock.unlock();
-        }
+        insertChannelInfoEntity = channelInfoRepository.save(channelInfoEntity);
         long endTime = Instant.now().toEpochMilli();
         logger.debug("花多少時間:" + (endTime - beginTime));
         return getRestDto(insertChannelInfoEntity, "更新成功");
@@ -215,14 +239,14 @@ public class ChannelInfoServiceImpl implements ChannelInfoService {
 
             for (TargetEntity targetEntity : targetsEntity) {
                 writer.writeNext(new String[]{
-                        String.valueOf(targetEntity.getTagNameEnum()),
-                        String.valueOf(targetEntity.getNews()),
-                        String.valueOf(targetEntity.getBlog()),
-                        String.valueOf(targetEntity.getForum()),
-                        String.valueOf(targetEntity.getSocial()),
-                        String.valueOf(targetEntity.getComment()),
-                        String.valueOf(targetEntity.getQa()),
-                        String.valueOf(targetEntity.getVideo())
+                        String.valueOf(targetEntity.getTagName()),
+                        String.valueOf(targetEntity.getNewsCount()),
+                        String.valueOf(targetEntity.getBlogCount()),
+                        String.valueOf(targetEntity.getForumCount()),
+                        String.valueOf(targetEntity.getSocialCount()),
+                        String.valueOf(targetEntity.getCommentCount()),
+                        String.valueOf(targetEntity.getQaCount()),
+                        String.valueOf(targetEntity.getVideoCount())
                 });
             }
         } catch (IOException e) {

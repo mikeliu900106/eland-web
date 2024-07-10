@@ -26,13 +26,12 @@ public class TargetDaoImpl implements TargetDao {
                         "    SUM(CASE WHEN ci.p_type_2 = 'comment' THEN 1 ELSE 0 END) AS '評論',\n" +
                         "     SUM(CASE WHEN ci.p_type_2 = 'qa' THEN 1 ELSE 0 END) AS '問答網站',\n" +
                         "    SUM(CASE WHEN ci.p_type_2 = 'video' THEN 1 ELSE 0 END) AS '影音',\n" +
-                        "   ti.type\n" +
+                        "   ti.type AS '類型'\n" +
                         "FROM\n" +
                         "    channel_info ci\n" +
                         "    JOIN channel_tag_mapping ctm ON ci.source_area_id = ctm.s_area_id\n" +
                         "    JOIN tag_info ti ON ctm.tag_id = ti.tag_id\n" +
                         "WHERE ti.type = 1 " +
-                        "   AND ci.is_used = 1 " +
                         "   AND (? IS NULL OR ci.p_type_2 = ?) " +
                         "   AND (? IS NULL OR ti.tag_name = ?) " +
                         "GROUP BY\n" +
@@ -46,14 +45,13 @@ public class TargetDaoImpl implements TargetDao {
                         "    SUM(CASE WHEN ci.p_type_2 = 'social' THEN 1 ELSE 0 END) AS '社群網站',\n" +
                         "    SUM(CASE WHEN ci.p_type_2 = 'comment' THEN 1 ELSE 0 END) AS '評論',\n" +
                         "    SUM(CASE WHEN ci.p_type_2 = 'qa' THEN 1 ELSE 0 END) AS '問答網站',\n" +
-                        "    SUM(CASE WHEN ci.p_type_2 = 'video' THEN 1 ELSE 0 END) AS '影音'\n" +
-                        "   ti.type\n" +
+                        "    SUM(CASE WHEN ci.p_type_2 = 'video' THEN 1 ELSE 0 END) AS '影音',\n" +
+                        "   ti.type AS '類型'\n" +
                         "FROM\n" +
                         "    channel_info ci\n" +
                         "    JOIN channel_tag_mapping ctm ON ci.source_area_id = ctm.s_area_id\n" +
                         "    JOIN tag_info ti ON ctm.tag_id = ti.tag_id\n" +
                         "WHERE ti.type = 2 " +
-                        "    AND ci.is_used = 1 " +
                         "    AND (? IS NULL OR ci.p_type_2 = ?) " +
                         "    AND (? IS NULL OR ti.tag_name = ?) " +
                         "GROUP BY\n" +

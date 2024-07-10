@@ -17,34 +17,34 @@ public class MyExceptionHandler {
 
     @ExceptionHandler(value = DataNotFoundException.class)
     public ResponseEntity<String> handleDataNotFoundException(DataNotFoundException ex) {
-        logger.warn("DataNotFoundException");
+        logger.error("DataNotFoundException");
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
     }
 
     @ExceptionHandler(value = IOException.class)
     public ResponseEntity<String> handleIOException(IOException ex) {
-        logger.warn("IOException");
+        logger.error("IOException");
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body("檔案傳輸異常");
     }
 
     @ExceptionHandler(value = InterruptedException.class)
     public ResponseEntity<String> handleInterruptedException(InterruptedException ex) {
-        logger.warn("DataNotFoundException");
+        logger.error("DataNotFoundException");
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
     }
 
     @ExceptionHandler(value = ExecutionException.class)
     public ResponseEntity<String> handleExecutionException(ExecutionException ex) {
-        logger.warn("DataNotFoundException");
+        logger.error("DataNotFoundException");
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
     }
     @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
-        logger.warn("RuntimeException");
+        logger.error("RuntimeException");
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
     }

@@ -1,7 +1,6 @@
 package com.example.elandweb.dao;
 
 import com.example.elandweb.dto.TargetDto;
-import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -19,6 +18,7 @@ public class TargetRowMapper<T> implements RowMapper<TargetDto> {
                 .commentCount(rs.getInt("評論"))
                 .qaCount(rs.getInt("問答網站"))
                 .videoCount(rs.getInt("影音"))
+                .type(rs.getShort("類型"))
                 .build();
     }
 }

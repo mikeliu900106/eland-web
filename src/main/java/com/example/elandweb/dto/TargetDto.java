@@ -18,4 +18,5 @@ public class TargetDto {
     private int commentCount;
     private int qaCount;
     private int videoCount;
+    private short type;
 }

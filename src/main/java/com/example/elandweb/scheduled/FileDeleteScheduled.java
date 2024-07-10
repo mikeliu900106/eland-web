@@ -77,28 +77,30 @@ public class FileDeleteScheduled {
             throw new RuntimeException(e);
         }
     }
-//
-//    @Scheduled(fixedRate = 1, timeUnit = TimeUnit.MINUTES)
-//    public void insertDataToTempDataBase() {
-//
-//        logger.warn("target資料表刪除:");
-//        targetRepository.deleteAll();
-//        List<TargetDto> targetsDto = targetDao.findTargetByTagNameAndType(null, null);
-//        List<TargetDto> safeTargetsDto = new CopyOnWriteArrayList<>(targetsDto);
-//
-//        List<TargetEntity> targetsEntity = safeTargetsDto.stream().map((targetDto) -> {
-//            return TargetEntity.builder()
-//                    .blog(targetDto.getBlogCount())
-//                    .qa(targetDto.getQaCount())
-//                    .forum(targetDto.getForumCount())
-//                    .tagName(targetDto.getTagName())
-//                    .video(targetDto.getVideoCount())
-//                    .news(targetDto.getNewsCount())
-//                    .comment(targetDto.getCommentCount())
-//                    .social(targetDto.getSocialCount())
-//                    .build();
-//        }).toList();
-//        logger.debug("插入的資料:" + safeTargetsDto);
-//        targetRepository.saveAll(targetsEntity);
-//    }
+
+    @Scheduled(fixedRate = 30, timeUnit = TimeUnit.MINUTES)
+    public void insertDataToTempDataBase() {
+        if (targetRepository.count() > 0) {
+            logger.warn("target資料表刪除:");
+            targetRepository.deleteAll();
+        }
+        List<TargetDto> targetsDto = targetDao.findTargetByTagNameAndType(null, null);
+        List<TargetDto> safeTargetsDto = new CopyOnWriteArrayList<>(targetsDto);
+
+        List<TargetEntity> targetsEntity = safeTargetsDto.stream().parallel().map((targetDto) -> {
+            return TargetEntity.builder()
+                    .blogCount(targetDto.getBlogCount())
+                    .qaCount(targetDto.getQaCount())
+                    .forumCount(targetDto.getForumCount())
+                    .tagName(targetDto.getTagName())
+                    .videoCount(targetDto.getVideoCount())
+                    .newsCount(targetDto.getNewsCount())
+                    .commentCount(targetDto.getCommentCount())
+                    .socialCount(targetDto.getSocialCount())
+                    .type(targetDto.getType())
+                    .build();
+        }).toList();
+        logger.debug("插入的資料:" + safeTargetsDto);
+        targetRepository.saveAll(targetsEntity);
+    }
 }

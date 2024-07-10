@@ -80,14 +80,14 @@ public class ChannelInfoController {
     }
 
     @GetMapping(value = "/target")
-    public ResponseEntity<?> findAllTable(
+    public ResponseEntity<?> findTargetByTagNameAndType(
             HttpServletResponse response,
             @RequestParam(defaultValue = "", required = false) Optional<TypeEnum> typeCategoryEnum,
             @RequestParam(defaultValue = "", required = false) Optional<TagNameEnum> tagNameEnum,
-            @RequestParam(defaultValue = "false", required = false) String HandleDownload
+            @RequestParam(defaultValue = "false", required = false) String handleDownload
     ) throws IOException {
-        if (HandleDownload.equals("true")) {
-            byte[] b = channelInfoService.download(typeCategoryEnum, tagNameEnum, HandleDownload);
+        if (handleDownload.equals("true")) {
+            byte[] b = channelInfoService.download(typeCategoryEnum, tagNameEnum, handleDownload);
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=target.txt");
             return ResponseEntity.ok()
@@ -95,7 +95,7 @@ public class ChannelInfoController {
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)
                     .body(b);
         } else {
-            ResponseDto responseDto = channelInfoService.findTargetByTagNameAndType(typeCategoryEnum, tagNameEnum, HandleDownload);
+            ResponseDto responseDto = channelInfoService.findTargetByTagNameAndType(typeCategoryEnum, tagNameEnum, handleDownload);
             return ResponseEntity.ok()
                     .body(responseDto);
         }
